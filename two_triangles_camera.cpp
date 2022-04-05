@@ -11,8 +11,7 @@ GLFWwindow *window;
 
 #include <common/shader.hpp>
 
-void Draw(GLuint vbuffer, GLuint programID, GLint first,
-          GLuint matrixID, GLfloat *mvp) {
+void Draw(GLuint vbuffer, GLuint programID, GLint first, GLuint matrixID, GLfloat *mvp) {
     glUseProgram(programID);
     glUniformMatrix4fv(matrixID, 1, GL_FALSE, mvp);
     glEnableVertexAttribArray(0);
@@ -22,12 +21,10 @@ void Draw(GLuint vbuffer, GLuint programID, GLint first,
     glDisableVertexAttribArray(0);
 }
 
-glm::mat4 ComputeMVPFromTime(double time, glm::vec3 initialPos = glm::vec3(0, 1, 0)) {
+glm::mat4 ComputeMVPFromTime(double time, glm::vec3 initialPos = glm::vec3(0, 0, 0)) {
     glm::vec3 newPos = initialPos + glm::vec3(glm::cos(time), 0, glm::sin(time));
-    glm::mat4 Projection =
-            glm::perspective(glm::radians(90.0f), 4.0f / 3.0f, 0.1f, 100.0f);
-    glm::mat4 View =
-            glm::lookAt(newPos, glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+    glm::mat4 Projection = glm::perspective(glm::radians(90.0f), 4.0f / 3.0f, 0.1f, 100.0f);
+    glm::mat4 View = glm::lookAt(newPos, glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
     glm::mat4 Model = glm::mat4(1.0f);
     glm::mat4 MVP = Projection * View * Model;
     return MVP;
